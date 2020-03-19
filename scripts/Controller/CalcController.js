@@ -18,6 +18,7 @@ class CalcController {
             this.setDisplayDateTime();
         }, 1000);
         this.setLastNumberToDisplay();
+        console.log("Teste");
     }
     addEventListenerAll(element, events, fn) {
 

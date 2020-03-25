@@ -10,7 +10,7 @@ class CalcController {
     this._timeEl = document.querySelector("#hora");
     this._currentDate;
     this._audioOnOff = false;
-    this._audio = new Audio('click.mp3');
+    this._audio = new Audio("click.mp3");
     this.initialize();
     this.initButtonEvents();
     this.initiKeyBoard();
@@ -30,12 +30,11 @@ class CalcController {
   }
 
   pasteFromClipBoard() {
-
-    document.addEventListener('paste', e => {
-        let text = e.clipboardData.getData('Text');
-        this.displayCalc = parseFloat(text);
-        console.log(text);
-    })
+    document.addEventListener("paste", e => {
+      let text = e.clipboardData.getData("Text");
+      this.displayCalc = parseFloat(text);
+      console.log(text);
+    });
   }
   initialize() {
     this.setDisplayDateTime();
@@ -45,20 +44,20 @@ class CalcController {
     this.setLastNumberToDisplay();
     this.pasteFromClipBoard();
 
-    document.querySelectorAll('.btn-ac').forEach(btn => {
-        btn.addEventListener('dblclick', e => {
-            this.toggleAudio();
-        });
+    document.querySelectorAll(".btn-ac").forEach(btn => {
+      btn.addEventListener("dblclick", e => {
+        this.toggleAudio();
+      });
     });
   }
-  toggleAudio(){
+  toggleAudio() {
     this._audioOnOff = !this._audioOnOff;
   }
-  playAudio(){
-      if(this._audioOnOff){
-        this._audio.currentTime = 0;
-        this._audio.play();
-      }
+  playAudio() {
+    if (this._audioOnOff) {
+      this._audio.currentTime = 0;
+      this._audio.play();
+    }
   }
   initButtonEvents() {
     let buttons = document.querySelectorAll("#buttons > g, #parts > g ");
@@ -76,8 +75,7 @@ class CalcController {
   }
   initiKeyBoard() {
     document.addEventListener("keyup", e => {
-
-        this.playAudio();
+      this.playAudio();
 
       switch (e.key) {
         case "Escape":
@@ -152,7 +150,13 @@ class CalcController {
     }
   }
   getResult() {
-    return eval(this._operation.join(""));
+    try {
+      return eval(this._operation.join(""));
+    }catch(e){
+      setTimeout(()=>{
+        this.setError();
+      }, 1);
+    }
   }
   calc() {
     let last = "";
@@ -240,9 +244,9 @@ class CalcController {
     this.setLastNumberToDisplay();
   }
   execBtn(value) {
-      this.playAudio();
-    
-      switch (value) {
+    this.playAudio();
+
+    switch (value) {
       case "ac":
         this.clearAll();
         break;
@@ -313,7 +317,7 @@ class CalcController {
     return this._displayCalcEl.innerHTML;
   }
   set displayCalc(value) {
-    if(value.toString().length > 10){
+    if (value.toString().length > 10) {
       this.setError();
       return false;
     }
